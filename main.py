@@ -72,7 +72,7 @@ def statistic():
             vk_bots = vk['bots']
 
             if vk_bots < vk_bot_limit:
-                message += f'Недостаточно прокси *vk*: _{vk_bots}_, минимум _{vk_bot_limit}_ \n'
+                message += f'Недостаточно ботов *vk*: _{vk_bots}_, минимум _{vk_bot_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *vk* \n'
         try:
@@ -80,7 +80,7 @@ def statistic():
             ig_bots = ig['bots']
 
             if ig_bots < ig_bot_limit:
-                message += f'Недостаточно прокси *ig*: _{ig_bots}_, минимум _{ig_bot_limit}_ \n'
+                message += f'Недостаточно ботов *ig*: _{ig_bots}_, минимум _{ig_bot_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *ig* \n'
         try:
