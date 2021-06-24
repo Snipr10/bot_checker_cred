@@ -5,10 +5,11 @@ import time
 import telebot
 import requests
 
-
 # logging.basicConfig(filename='prod.log', level=logging.INFO)
 
 bot = telebot.TeleBot('1893821469:AAHntjwGyhzSCWzfqck3aBNEk1g2X3ipBDU')
+
+trouble_exist = []
 
 
 @bot.message_handler(commands=['start'])
@@ -99,12 +100,20 @@ def statistic():
             message += f'Не могу получить прокси для *сим* \n'
     except Exception:
         message += f'Не могу получить данные по *сми* \n'
+    if message != '':
+        if len(trouble_exist) == 0:
+            trouble_exist.append(1)
+    else:
+        trouble_exist.clear()
     return message
 
 
-def send_static():
+def send_static_an_hour(message=None):
     try:
-        bot.send_message('-535382146', statistic(), parse_mode='Markdown')
+        if message is None:
+            message = statistic()
+        if message != '':
+            bot.send_message('-535382146', message, parse_mode='Markdown')
     except Exception:
         try:
             bot.send_message('457180576', 'Что-то сломалось', parse_mode='Markdown')
@@ -112,7 +121,30 @@ def send_static():
             pass
 
 
-schedule.every(30).minutes.do(send_static)
+def send_static_new():
+    if len(trouble_exist) == 0:
+        send_static_an_hour()
+
+
+schedule.every(10).minutes.do(send_static_new)
+schedule.every().day.at("08:00").do(send_static_an_hour)
+schedule.every().day.at("09:00").do(send_static_an_hour)
+schedule.every().day.at("10:00").do(send_static_an_hour)
+schedule.every().day.at("11:00").do(send_static_an_hour)
+schedule.every().day.at("12:00").do(send_static_an_hour)
+schedule.every().day.at("13:00").do(send_static_an_hour)
+schedule.every().day.at("14:00").do(send_static_an_hour)
+schedule.every().day.at("15:00").do(send_static_an_hour)
+schedule.every().day.at("16:00").do(send_static_an_hour)
+schedule.every().day.at("17:00").do(send_static_an_hour)
+schedule.every().day.at("18:00").do(send_static_an_hour)
+schedule.every().day.at("19:00").do(send_static_an_hour)
+schedule.every().day.at("20:00").do(send_static_an_hour)
+schedule.every().day.at("21:00").do(send_static_an_hour)
+schedule.every().day.at("22:00").do(send_static_an_hour)
+schedule.every().day.at("23:00").do(send_static_an_hour)
+schedule.every().day.at("23:59").do(send_static_an_hour)
+
 # schedule.every().minute.at .at(":30:30").do(send_static)
 
 
@@ -130,9 +162,3 @@ pool_source = ThreadPoolExecutor(3)
 pool_source.submit(start_sending_message)
 pool_source.submit(start_bot)
 pool_source.shutdown()
-
-
-
-
-
-
