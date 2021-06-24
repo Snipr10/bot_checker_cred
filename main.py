@@ -31,9 +31,9 @@ tg_bot_limit = 150
 tg_balance_limit = 100
 
 vk_bot_limit = 2_500
-vk_proxy_limit = 200
+vk_proxy_limit = 2_500
 
-tw_proxy_limit = 200
+tw_proxy_limit = 2_500
 
 ig_bot_limit = 600
 ig_proxy_limit = 1_000
