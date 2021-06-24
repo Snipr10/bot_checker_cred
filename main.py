@@ -24,22 +24,33 @@ def send_statistic(message):
 
 fb_proxy_limit = 200
 fb_worker_limit = 30
-fb_balance_limit = 30
+fb_balance_limit = 100
 
 tg_proxy_limit = 200
 tg_bot_limit = 150
 tg_balance_limit = 100
 
-vk_bot_limit = 3000
+vk_bot_limit = 2_500
+vk_proxy_limit = 200
 
-ig_bot_limit = 1000
+tw_proxy_limit = 200
 
-proxy_without_smi_limit = 4500
-proxy_smi_limit = 4500
+ig_bot_limit = 600
+ig_proxy_limit = 1_000
+
+yt_proxy_limit = 250
+
+smi_proxy_limit = 1_000
+
+proxy_all_limit = 30_000
+
+# proxy_without_smi_limit = 4500
+# proxy_smi_limit = 4500
 
 
 def statistic():
     message = ''
+    fb_proxy = 0
     try:
         fb = requests.get('http://194.50.24.4:7999/api/statistic').json()
         fb_proxy = fb['proxy']
@@ -71,35 +82,47 @@ def statistic():
         try:
             vk = parsing_data['vk']
             vk_bots = vk['bots']
-
+            vk_proxy = vk['proxy']
             if vk_bots < vk_bot_limit:
                 message += f'Недостаточно ботов *vk*: _{vk_bots}_, минимум _{vk_bot_limit}_ \n'
+            if vk_proxy < vk_proxy_limit:
+                message += f'Недостаточно прокси *vk*: _{vk_proxy}_, минимум _{vk_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *vk* \n'
         try:
+            tw = parsing_data['tw']
+            tw_proxy = tw['proxy']
+            if tw_proxy < tw_proxy_limit:
+                message += f'Недостаточно прокси *tw*: _{tw_proxy}_, минимум _{tw_proxy_limit}_ \n'
+        except Exception:
+            message += f'Не могу получить данные из *tw* \n'
+        try:
             ig = parsing_data['ig']
             ig_bots = ig['bots']
-
+            ig_proxy = ig['proxy']
             if ig_bots < ig_bot_limit:
                 message += f'Недостаточно ботов *ig*: _{ig_bots}_, минимум _{ig_bot_limit}_ \n'
+            if ig_proxy < ig_proxy_limit:
+                message += f'Недостаточно прокси *ig*: _{ig_proxy}_, минимум _{ig_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *ig* \n'
         try:
-            proxy_without_smi = parsing_data['proxy_without_smi']
-
-            if proxy_without_smi < proxy_without_smi_limit:
-                message += f'Недостаточно прокси для *соцсетей*: _{proxy_without_smi}_, минимум _{proxy_without_smi_limit}_ \n'
-        except Exception:
-            message += f'Не могу получить прокси для *соцсетей* \n'
-        try:
             proxy_smi = parsing_data['proxy_smi']
-
-            if proxy_smi < proxy_smi_limit:
-                message += f'Недостаточно прокси для *сми*: _{proxy_smi}_, минимум _{proxy_smi_limit}_ \n'
+            if proxy_smi < smi_proxy_limit:
+                message += f'Недостаточно прокси для *сми*: _{proxy_smi}_, минимум _{smi_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить прокси для *сим* \n'
+
+        try:
+            proxy_without_smi = parsing_data['proxy_without_smi']
+            proxy_all = proxy_without_smi + fb_proxy
+            if proxy_without_smi < proxy_all_limit:
+                message += f'Недостаточно прокси: _{proxy_all}_, минимум _{proxy_all_limit}_ \n'
+        except Exception:
+            message += f'Не могу получить данные по всем прокси \n'
+
     except Exception:
-        message += f'Не могу получить данные по *сми* \n'
+        message += f'Не могу получить данные по *соцсетям* \n'
     if message != '':
         if len(trouble_exist) == 0:
             trouble_exist.append(1)
