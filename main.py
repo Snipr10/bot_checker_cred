@@ -42,7 +42,7 @@ yt_proxy_limit = 250
 
 smi_proxy_limit = 1_000
 
-proxy_all_limit = 30_000
+proxy_all_limit = 3_000
 
 # proxy_without_smi_limit = 4500
 # proxy_smi_limit = 4500
