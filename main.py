@@ -151,22 +151,9 @@ def send_static_new():
 
 schedule.every(10).minutes.do(send_static_new)
 schedule.every().day.at("08:00").do(send_static_an_hour)
-schedule.every().day.at("09:00").do(send_static_an_hour)
-schedule.every().day.at("10:00").do(send_static_an_hour)
-schedule.every().day.at("11:00").do(send_static_an_hour)
 schedule.every().day.at("12:00").do(send_static_an_hour)
-schedule.every().day.at("13:00").do(send_static_an_hour)
-schedule.every().day.at("14:00").do(send_static_an_hour)
-schedule.every().day.at("15:00").do(send_static_an_hour)
 schedule.every().day.at("16:00").do(send_static_an_hour)
-schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("18:00").do(send_static_an_hour)
-schedule.every().day.at("19:00").do(send_static_an_hour)
 schedule.every().day.at("20:00").do(send_static_an_hour)
-schedule.every().day.at("21:00").do(send_static_an_hour)
-schedule.every().day.at("22:00").do(send_static_an_hour)
-schedule.every().day.at("23:00").do(send_static_an_hour)
-schedule.every().day.at("23:59").do(send_static_an_hour)
 
 # schedule.every().minute.at .at(":30:30").do(send_static)
 
