@@ -116,7 +116,7 @@ def statistic():
         try:
             proxy_without_smi = parsing_data['proxy_without_smi']
             proxy_all = proxy_without_smi + fb_proxy
-            if proxy_without_smi < proxy_all_limit:
+            if proxy_all < proxy_all_limit:
                 message += f'Недостаточно прокси: _{proxy_all}_, минимум _{proxy_all_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные по всем прокси \n'
