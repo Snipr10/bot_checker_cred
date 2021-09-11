@@ -26,8 +26,8 @@ fb_proxy_limit = 200
 fb_worker_limit = 30
 fb_balance_limit = 100
 
-tg_proxy_limit = 200
-tg_bot_limit = 150
+tg_proxy_limit = 500
+tg_bot_limit = 500
 tg_balance_limit = 100
 
 vk_bot_limit = 2_500
