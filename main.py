@@ -148,12 +148,12 @@ def parsing_statistic():
     try:
         tasks_yt_tg_status = requests.get(URL_TG_API + "tasks_yt_tg_status")
         res_json = tasks_yt_tg_status.json()
-        text_message += f"парсинг каналов tg: {get_date(res_json['tg_sources'])}; \n"
-        text_message += f"поиск по ключам yt: {get_date(res_json['yt_sources'])}; \n"
-        text_message += f"парсинг каналов yt: {get_date(res_json['yt_channels'])}; \n"
+        text_message += f"парсинг каналов *tg*: {get_date(res_json['tg_sources'])}; \n"
+        text_message += f"поиск по ключам *yt*: {get_date(res_json['yt_sources'])}; \n"
+        text_message += f"парсинг каналов *yt*: {get_date(res_json['yt_channels'])}; \n"
 
-    except Exception:
-        text_message += "Не удалось собрать статистику"
+    except Exception as e:
+        text_message += "Не удалось собрать статистику" + str(e)
 
     return text_message
 
