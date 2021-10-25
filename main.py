@@ -144,7 +144,7 @@ def get_date(date):
 
 
 def parsing_statistic():
-    text_message = "\n Ждут обновления: \n"
+    text_message = "\nЖдут обновления: \n"
 
     try:
         tasks_yt_tg_status = requests.get(URL_TG_API + "tasks_yt_tg_status")
@@ -181,8 +181,6 @@ schedule.every(10).minutes.do(send_static_new)
 schedule.every().day.at("08:00").do(send_static_an_hour)
 schedule.every().day.at("12:00").do(send_static_an_hour)
 schedule.every().day.at("16:00").do(send_static_an_hour)
-schedule.every().day.at("17:13").do(send_static_an_hour)
-
 schedule.every().day.at("20:00").do(send_static_an_hour)
 
 # schedule.every().minute.at .at(":30:30").do(send_static)
