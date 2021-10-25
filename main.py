@@ -1,5 +1,6 @@
 from concurrent.futures.thread import ThreadPoolExecutor
 
+import dateutil
 import schedule
 import time
 import telebot
@@ -8,6 +9,10 @@ import requests
 # logging.basicConfig(filename='prod.log', level=logging.INFO)
 
 bot = telebot.TeleBot('1893821469:AAHntjwGyhzSCWzfqck3aBNEk1g2X3ipBDU')
+
+
+URL_TG_API = "http://194.50.24.4:8000/api/"
+
 
 trouble_exist = []
 
@@ -123,12 +128,34 @@ def statistic():
 
     except Exception:
         message += f'Не могу получить данные по *соцсетям* \n'
+
     if message != '':
         if len(trouble_exist) == 0:
             trouble_exist.append(1)
     else:
         trouble_exist.clear()
+    message += parsing_statistic()
     return message
+
+
+def get_date(date):
+    return dateutil.parser.isoparse(date).strftime("%H:%M:%S %d-%m-%Y")
+
+
+def parsing_statistic():
+    text_message = "\n Ждут обновления: \n"
+
+    try:
+        tasks_yt_tg_status = requests.get(URL_TG_API + "tasks_yt_tg_status")
+        res_json = tasks_yt_tg_status.json()
+        text_message += f"парсинг каналов tg: {get_date(res_json['tg_sources'])}; \n"
+        text_message += f"поиск по ключам yt: {get_date(res_json['yt_sources'])}; \n"
+        text_message += f"парсинг каналов yt: {get_date(res_json['yt_channels'])}; \n"
+
+    except Exception:
+        text_message += "Не удалось собрать статистику"
+
+    return text_message
 
 
 def send_static_an_hour(message=None):
