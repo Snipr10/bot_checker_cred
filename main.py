@@ -1,6 +1,7 @@
 from concurrent.futures.thread import ThreadPoolExecutor
 
-import dateutil
+import dateutil.parser
+
 import schedule
 import time
 import telebot
