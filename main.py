@@ -9,7 +9,7 @@ import requests
 
 # logging.basicConfig(filename='prod.log', level=logging.INFO)
 
-bot = telebot.TeleBot('1893821469:AAHY43BGPpvz65K-lFZlCAUW5YyK06O6vFg')
+bot = telebot.TeleBot('1893821469:AAHntjwGyhzSCWzfqck3aBNEk1g2X3ipBDU')
 
 
 URL_TG_API = "http://194.50.24.4:8000/api/"
@@ -32,8 +32,8 @@ fb_proxy_limit = 200
 fb_worker_limit = 30
 fb_balance_limit = 100
 
-tg_proxy_limit = 500
-tg_bot_limit = 500
+tg_proxy_limit = 600
+tg_bot_limit = 600
 tg_balance_limit = 100
 
 vk_bot_limit = 2_500
