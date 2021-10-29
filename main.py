@@ -9,7 +9,7 @@ import requests
 
 # logging.basicConfig(filename='prod.log', level=logging.INFO)
 
-bot = telebot.TeleBot('1893821469:AAHntjwGyhzSCWzfqck3aBNEk1g2X3ipBDU')
+bot = telebot.TeleBot('1893821469:AAEd2nx3KBlvxrUv3orEgy35eoDBJ36o0HE')
 
 
 URL_TG_API = "http://194.50.24.4:8000/api/"
