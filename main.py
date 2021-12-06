@@ -152,7 +152,11 @@ def parsing_statistic():
         text_message += f"парсинг каналов *tg*: {get_date(res_json['tg_sources'])}; \n"
         text_message += f"поиск по ключам *yt*: {get_date(res_json['yt_keys'])}; \n"
         text_message += f"парсинг каналов *yt*: {get_date(res_json['yt_sources'])}; \n"
-
+        # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
+        for site in res_json['sites']:
+            text_message += f"парсинг *{site[0]}*: {get_date(site[1])}; \n"
+        for site in res_json['sites_keys_res']:
+            text_message += f"парсинг *{[*site][0]}*: {get_date([*site.values()][0]['first'])}; \n"
     except Exception as e:
         text_message += "Не удалось собрать статистику" + str(e)
 
