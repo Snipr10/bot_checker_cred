@@ -1,4 +1,5 @@
 from concurrent.futures.thread import ThreadPoolExecutor
+from datetime import datetime, timedelta
 
 import dateutil.parser
 
@@ -181,7 +182,48 @@ def send_static_new():
         send_static_an_hour()
 
 
+def get_response_json(attempts=0):
+    try:
+        tasks_yt_tg_status = requests.get(URL_TG_API + "tasks_yt_tg_status")
+        res_json = tasks_yt_tg_status.json()
+        return res_json
+    except Exception:
+        time.sleep(60)
+        attempts += 1
+        if attempts > 3:
+            return None
+        else:
+            return get_response_json(attempts)
+
+
+def checker():
+    try:
+        text = ""
+        res_json = get_response_json()
+        if res_json.get("bd") is not None:
+            if res_json.get("bd"):
+                text += f"*БД не отвечает*  \n"
+        else:
+            tg = dateutil.parser.isoparse(res_json['tg_last'])
+            if tg.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*TG не отчевает*  \n"
+            yt = dateutil.parser.isoparse(res_json['yt_last'])
+            if yt.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*YT не отчевает*  \n"
+            for site in res_json['sites']:
+                if dateutil.parser.isoparse(site[1]).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
+                    text += f"*{site[0]} не отчевает* \n"
+            for site in res_json['sites_keys_res']:
+                if dateutil.parser.isoparse([*site.values()][0]['last']).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
+                    text += f"*{[*site][0]} не отчевает*  \n"
+        if text:
+            bot.send_message('-535382146', text, parse_mode='Markdown')
+    except Exception:
+        bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
+
+
 schedule.every(10).minutes.do(send_static_new)
+schedule.every(10).minutes.do(checker)
 schedule.every().day.at("08:00").do(send_static_an_hour)
 schedule.every().day.at("12:00").do(send_static_an_hour)
 schedule.every().day.at("16:00").do(send_static_an_hour)
