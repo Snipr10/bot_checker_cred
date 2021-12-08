@@ -212,6 +212,7 @@ def checker():
         text = ""
         res_json = get_response_json()
         print(res_json)
+        print(res_json.get("bd"))
         if res_json.get("bd") is not None:
             if res_json.get("bd"):
                 text += f"*БД не отвечает*  \n"
