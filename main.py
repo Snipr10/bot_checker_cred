@@ -240,11 +240,10 @@ def checker():
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
     except Exception as e:
-        print(e)
+        bot.send_message('457180576', str(e), parse_mode='Markdown')
         bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
 
 
-schedule.every(50).minutes.do(send_static_new)
 schedule.every(10).minutes.do(checker)
 schedule.every().day.at("08:00").do(send_static_an_hour)
 schedule.every().day.at("12:00").do(send_static_an_hour)
