@@ -234,7 +234,8 @@ def checker():
                 text += f"*FB не отчевает* \n"
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
-    except Exception:
+    except Exception as e:
+        print(e)
         bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
 
 
