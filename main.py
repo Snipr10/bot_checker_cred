@@ -207,7 +207,7 @@ def get_fb_response_json(attempts=0):
             return get_fb_response_json(attempts)
 
 
-def checker():
+def checker(attempt=0):
     try:
         text = ""
         res_json = get_response_json()
@@ -240,9 +240,12 @@ def checker():
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
     except Exception as e:
-        print(e)
-        bot.send_message('457180576', str(e), parse_mode='Markdown')
-        bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
+        if attempt < 5:
+            attempt += 1
+            return checker(attempt)
+        else:
+            bot.send_message('457180576', str(e), parse_mode='Markdown')
+            bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
 
 
 schedule.every(3).minutes.do(checker)
