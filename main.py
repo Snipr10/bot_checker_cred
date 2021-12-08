@@ -206,10 +206,12 @@ def get_fb_response_json(attempts=0):
         else:
             return get_fb_response_json(attempts)
 
+
 def checker():
     try:
         text = ""
         res_json = get_response_json()
+        print(res_json)
         if res_json.get("bd") is not None:
             if res_json.get("bd"):
                 text += f"*БД не отвечает*  \n"
@@ -242,7 +244,7 @@ def checker():
 
 
 schedule.every(10).minutes.do(send_static_new)
-schedule.every(10).minutes.do(checker)
+schedule.every(2).minutes.do(checker)
 schedule.every().day.at("08:00").do(send_static_an_hour)
 schedule.every().day.at("12:00").do(send_static_an_hour)
 schedule.every().day.at("16:00").do(send_static_an_hour)
