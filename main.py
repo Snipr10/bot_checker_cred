@@ -195,6 +195,16 @@ def get_response_json(attempts=0):
         else:
             return get_response_json(attempts)
 
+def get_fb_response_json(attempts=0):
+    try:
+        return requests.get('http://194.50.24.4:7999/api/statistic').json()
+    except Exception:
+        time.sleep(60)
+        attempts += 1
+        if attempts > 3:
+            return None
+        else:
+            return get_fb_response_json(attempts)
 
 def checker():
     try:
@@ -216,6 +226,12 @@ def checker():
             for site in res_json['sites_keys_res']:
                 if dateutil.parser.isoparse([*site.values()][0]['last']).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
                     text += f"*{[*site][0]} не отчевает*  \n"
+            fb = get_fb_response_json()
+            if fb:
+                if fb.dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                    text += f"*FB не отчевает* \n"
+            else:
+                text += f"*FB не отчевает* \n"
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
     except Exception:
