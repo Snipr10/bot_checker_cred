@@ -214,7 +214,7 @@ def checker():
         print(res_json)
         print(res_json.get("bd"))
         if res_json.get("bd") is not None:
-            if res_json.get("bd"):
+            if not res_json.get("bd"):
                 text += f"*БД не отвечает*  \n"
         else:
             tg = dateutil.parser.isoparse(res_json['tg_last'])
