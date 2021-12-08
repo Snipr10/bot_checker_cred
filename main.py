@@ -228,7 +228,7 @@ def checker():
                     text += f"*{[*site][0]} не отчевает*  \n"
             fb = get_fb_response_json()
             if fb:
-                if fb.dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                if dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                     text += f"*FB не отчевает* \n"
             else:
                 text += f"*FB не отчевает* \n"
