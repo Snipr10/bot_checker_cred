@@ -229,7 +229,8 @@ def checker():
             fb = get_fb_response_json()
             print(fb)
             if fb is not None:
-                if dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                # utc + 3
+                if dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=5):
                     text += f"*FB не отчевает* \n"
             else:
                 text += f"*FB не отчевает* \n"
