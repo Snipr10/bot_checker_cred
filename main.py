@@ -256,7 +256,6 @@ schedule.every(15).minutes.do(checker)
 # time -3 (UTC)
 # https://stackoverflow.com/questions/65551967/python-scheduler-schedule-job-in-specific-time-zone-from-any-time-zone
 schedule.every().day.at("05:00").do(send_static_an_hour)
-schedule.every().day.at("05:30").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
