@@ -249,12 +249,16 @@ def checker(attempt=0):
 
 
 schedule.every(15).minutes.do(checker)
-schedule.every().day.at("08:00").do(send_static_an_hour)
-schedule.every().day.at("12:00").do(send_static_an_hour)
-schedule.every().day.at("16:00").do(send_static_an_hour)
-schedule.every().day.at("20:00").do(send_static_an_hour)
+# schedule.every().day.at("08:00").do(send_static_an_hour)
+# schedule.every().day.at("12:00").do(send_static_an_hour)
+# schedule.every().day.at("16:00").do(send_static_an_hour)
+# schedule.every().day.at("20:00").do(send_static_an_hour)
 
-# schedule.every().minute.at .at(":30:30").do(send_static)
+schedule.every().day.at("05:00").do(send_static_an_hour)
+schedule.every().day.at("05:25").do(send_static_an_hour)
+schedule.every().day.at("09:00").do(send_static_an_hour)
+schedule.every().day.at("13:00").do(send_static_an_hour)
+schedule.every().day.at("17:00").do(send_static_an_hour)
 
 
 def start_bot():
