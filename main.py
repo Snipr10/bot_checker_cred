@@ -141,7 +141,10 @@ def statistic():
 
 
 def get_date(date):
-    return dateutil.parser.isoparse(date).strftime("%H:%M:%S %d-%m-%Y")
+    try:
+        return dateutil.parser.isoparse(date).strftime("%d-%m-%Y %H:%M:%S")
+    except Exception:
+        return "new"
 
 
 def parsing_statistic():
