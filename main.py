@@ -58,11 +58,15 @@ proxy_all_limit = 3_000
 def statistic():
     message = ''
     fb_proxy = 0
+    fb_posts = "None"
+    tg_posts = "None"
+    yt_posts = "None"
     try:
         fb = requests.get('http://194.50.24.4:7999/api/statistic').json()
         fb_proxy = fb['proxy']
         fb_worker = fb['worker']
         fb_balance = fb['balance']
+        fb_posts = fb['count']
         if fb_proxy < fb_proxy_limit:
             message += f'Недостаточно прокси *fb*: _{fb_proxy}_, минимум _{fb_proxy_limit}_ \n'
         if fb_worker < fb_worker_limit:
@@ -78,6 +82,8 @@ def statistic():
             tg_bots = tg['bots']
             tg_proxy = tg['proxy']
             tg_balance = tg['balance']
+            tg_posts = tg['count']
+
             if tg_proxy < tg_proxy_limit:
                 message += f'Недостаточно прокси *tg*: _{tg_proxy}_, минимум _{tg_proxy_limit}_ \n'
             if tg_bots < tg_bot_limit:
@@ -127,7 +133,12 @@ def statistic():
                 message += f'Недостаточно прокси: _{proxy_all}_, минимум _{proxy_all_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные по всем прокси \n'
+        try:
+            yt = parsing_data['yt']
+            yt_posts = yt['count']
 
+        except Exception:
+            message += f'Не могу получить данные из *yt* \n'
     except Exception:
         message += f'Не могу получить данные по *соцсетям* \n'
 
@@ -137,6 +148,11 @@ def statistic():
     else:
         trouble_exist.clear()
     message += parsing_statistic()
+
+    message += "\n *Статистика парсинга:* \n"
+    message += f"*fb:* {fb_posts} \n"
+    message += f"*tg:* {tg_posts} \n"
+    message += f"*yt:* {yt_posts} \n"
     return message
 
 
