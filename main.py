@@ -154,7 +154,7 @@ def statistic():
             ok_posts = ok['count']
             ok_bot = ok['bot']
             if ok_bot < ok_bot_limit:
-                message += f'Недостаточно ботов *fb*: _{ok_bot}_, минимум _{ok_bot_limit}_ \n'
+                message += f'Недостаточно ботов *ok*: _{ok_bot}_, минимум _{ok_bot_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *yt* \n'
     except Exception:
