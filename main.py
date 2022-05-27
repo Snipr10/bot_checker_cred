@@ -30,8 +30,10 @@ def send_statistic(message):
 
 
 fb_proxy_limit = 200
-fb_worker_limit = 30
+fb_bot_limit = 30
 fb_balance_limit = 100
+
+ok_bot_limit = 30
 
 tg_proxy_limit = 600
 tg_bot_limit = 600
@@ -61,20 +63,21 @@ def statistic():
     fb_posts = "None"
     tg_posts = "None"
     yt_posts = "None"
-    try:
-        fb = requests.get('http://194.50.24.4:7999/api/statistic').json()
-        fb_proxy = fb['proxy']
-        fb_worker = fb['worker']
-        fb_balance = fb['balance']
-        fb_posts = fb['count']
-        if fb_proxy < fb_proxy_limit:
-            message += f'Недостаточно прокси *fb*: _{fb_proxy}_, минимум _{fb_proxy_limit}_ \n'
-        if fb_worker < fb_worker_limit:
-            message += f'Недостаточно ботов *fb*: _{fb_worker}_, минимум _{fb_worker_limit}_ \n'
-        if fb_balance < fb_balance_limit:
-            message += f'Недостаточно денег на активаторе *fb*: _{fb_balance}_, минимум _{fb_balance_limit}_ \n'
-    except Exception:
-        message += f'Не могу получить данные из *fb* \n'
+    ok_posts = "None"
+    # try:
+    #     fb = requests.get('http://194.50.24.4:7999/api/statistic').json()
+    #     fb_proxy = fb['proxy']
+    #     fb_worker = fb['worker']
+    #     fb_balance = fb['balance']
+    #     fb_posts = fb['count']
+    #     if fb_proxy < fb_proxy_limit:
+    #         message += f'Недостаточно прокси *fb*: _{fb_proxy}_, минимум _{fb_proxy_limit}_ \n'
+    #     if fb_worker < fb_worker_limit:
+    #         message += f'Недостаточно ботов *fb*: _{fb_worker}_, минимум _{fb_worker_limit}_ \n'
+    #     if fb_balance < fb_balance_limit:
+    #         message += f'Недостаточно денег на активаторе *fb*: _{fb_balance}_, минимум _{fb_balance_limit}_ \n'
+    # except Exception:
+    #     message += f'Не могу получить данные из *fb* \n'
     try:
         parsing_data = requests.get('http://194.50.24.4:8000/api/statistic').json()
         try:
@@ -136,7 +139,22 @@ def statistic():
         try:
             yt = parsing_data['yt']
             yt_posts = yt['count']
-
+        except Exception:
+            message += f'Не могу получить данные из *yt* \n'
+        try:
+            fb = parsing_data['fb']
+            fb_posts = fb['count']
+            fb_bot = fb['bot']
+            if fb_bot < fb_bot_limit:
+                message += f'Недостаточно ботов *fb*: _{fb_bot}_, минимум _{fb_bot_limit}_ \n'
+        except Exception:
+            message += f'Не могу получить данные из *yt* \n'
+        try:
+            ok = parsing_data['ok']
+            ok_posts = ok['count']
+            ok_bot = ok['bot']
+            if ok_bot < ok_bot_limit:
+                message += f'Недостаточно ботов *fb*: _{ok_bot}_, минимум _{ok_bot_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *yt* \n'
     except Exception:
@@ -150,9 +168,10 @@ def statistic():
     message += parsing_statistic()
 
     message += "\n *Статистика парсинга:* \n"
-    message += f"*fb:* {fb_posts} \n"
     message += f"*tg:* {tg_posts} \n"
     message += f"*yt:* {yt_posts} \n"
+    message += f"*fb:* {fb_posts} \n"
+    message += f"*ok:* {ok_posts} \n"
     return message
 
 
@@ -172,6 +191,10 @@ def parsing_statistic():
         text_message += f"парсинг каналов *tg*: {get_date(res_json['tg_sources'])}; \n"
         text_message += f"поиск по ключам *yt*: {get_date(res_json['yt_keys'])}; \n"
         text_message += f"парсинг каналов *yt*: {get_date(res_json['yt_sources'])}; \n"
+        text_message += f"поиск по ключам *fb*: {get_date(res_json['fb_keys'])}; \n"
+        text_message += f"парсинг каналов *fb*: {get_date(res_json['fb_sources'])}; \n"
+        text_message += f"поиск по ключам *ok*: {get_date(res_json['ok_keys'])}; \n"
+        text_message += f"парсинг каналов *ok*: {get_date(res_json['ok_sources'])}; \n"
         # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
         for site in res_json['sites']:
             text_message += f"парсинг *{site[0]}*: {get_date(site[1])}; \n"
@@ -242,20 +265,29 @@ def checker(attempt=0):
             yt = dateutil.parser.isoparse(res_json['yt_last'])
             if yt.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*YT не отчевает*  \n"
+
+            fb = dateutil.parser.isoparse(res_json['fb_last'])
+            if fb.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*FB не отчевает*  \n"
+
+            ok = dateutil.parser.isoparse(res_json['ok_last'])
+            if ok.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*OK не отчевает*  \n"
+
             for site in res_json['sites']:
                 if dateutil.parser.isoparse(site[1]).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
                     text += f"*{site[0]} не отчевает* \n"
             for site in res_json['sites_keys_res']:
                 if dateutil.parser.isoparse([*site.values()][0]['last']).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
                     text += f"*{[*site][0]} не отчевает*  \n"
-            fb = get_fb_response_json()
-            print(fb)
-            if fb is not None:
-                # utc + 3
-                if dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=5):
-                    text += f"*FB не отчевает* \n"
-            else:
-                text += f"*FB не отчевает* \n"
+            # fb = get_fb_response_json()
+            # print(fb)
+            # if fb is not None:
+            #     # utc + 3
+            #     if dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=5):
+            #         text += f"*FB не отчевает* \n"
+            # else:
+            #     text += f"*FB не отчевает* \n"
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
     except Exception as e:
