@@ -189,10 +189,12 @@ def parsing_statistic():
         tasks_yt_tg_status = requests.get(URL_TG_API + "tasks_yt_tg_status")
         res_json = tasks_yt_tg_status.json()
         text_message += f"парсинг каналов *tg*: {get_date(res_json['tg_sources'])}; \n"
+        text_message += f"парсинг определенных каналов *tg*: {get_date(res_json['tg_sources_special'])}; \n"
         text_message += f"поиск по ключам *yt*: {get_date(res_json['yt_keys'])}; \n"
         text_message += f"парсинг каналов *yt*: {get_date(res_json['yt_sources'])}; \n"
         text_message += f"поиск по ключам *fb*: {get_date(res_json['fb_keys'])}; \n"
         text_message += f"парсинг каналов *fb*: {get_date(res_json['fb_sources'])}; \n"
+        text_message += f"парсинг определенных каналов *fb*: {get_date(res_json['fb_sources_special'])}; \n"
         text_message += f"поиск по ключам *ok*: {get_date(res_json['ok_keys'])}; \n"
         text_message += f"парсинг каналов *ok*: {get_date(res_json['ok_sources'])}; \n"
         # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
@@ -299,17 +301,17 @@ def checker(attempt=0):
             bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
 
 
-schedule.every(15).minutes.do(checker)
+# schedule.every(15).minutes.do(checker)
 # schedule.every().day.at("08:00").do(send_static_an_hour)
 # schedule.every().day.at("12:00").do(send_static_an_hour)
 # schedule.every().day.at("16:00").do(send_static_an_hour)
 # schedule.every().day.at("20:00").do(send_static_an_hour)
 # time -3 (UTC)
-# https://stackoverflow.com/questions/65551967/python-scheduler-schedule-job-in-specific-time-zone-from-any-time-zone
-schedule.every().day.at("05:00").do(send_static_an_hour)
-schedule.every().day.at("09:00").do(send_static_an_hour)
-schedule.every().day.at("13:00").do(send_static_an_hour)
-schedule.every().day.at("17:00").do(send_static_an_hour)
+# # https://stackoverflow.com/questions/65551967/python-scheduler-schedule-job-in-specific-time-zone-from-any-time-zone
+# schedule.every().day.at("05:00").do(send_static_an_hour)
+# schedule.every().day.at("09:00").do(send_static_an_hour)
+# schedule.every().day.at("13:00").do(send_static_an_hour)
+# schedule.every().day.at("17:00").do(send_static_an_hour)
 
 
 def start_bot():
