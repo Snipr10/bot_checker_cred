@@ -301,17 +301,17 @@ def checker(attempt=0):
             bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
 
 
-# schedule.every(15).minutes.do(checker)
+schedule.every(15).minutes.do(checker)
 # schedule.every().day.at("08:00").do(send_static_an_hour)
 # schedule.every().day.at("12:00").do(send_static_an_hour)
 # schedule.every().day.at("16:00").do(send_static_an_hour)
 # schedule.every().day.at("20:00").do(send_static_an_hour)
 # time -3 (UTC)
-# # https://stackoverflow.com/questions/65551967/python-scheduler-schedule-job-in-specific-time-zone-from-any-time-zone
-# schedule.every().day.at("05:00").do(send_static_an_hour)
-# schedule.every().day.at("09:00").do(send_static_an_hour)
-# schedule.every().day.at("13:00").do(send_static_an_hour)
-# schedule.every().day.at("17:00").do(send_static_an_hour)
+# https://stackoverflow.com/questions/65551967/python-scheduler-schedule-job-in-specific-time-zone-from-any-time-zone
+schedule.every().day.at("05:00").do(send_static_an_hour)
+schedule.every().day.at("09:00").do(send_static_an_hour)
+schedule.every().day.at("13:00").do(send_static_an_hour)
+schedule.every().day.at("17:00").do(send_static_an_hour)
 
 
 def start_bot():
