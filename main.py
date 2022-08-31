@@ -239,6 +239,7 @@ def get_response_json(attempts=0):
         else:
             return get_response_json(attempts)
 
+
 def get_fb_response_json(attempts=0):
     try:
         return requests.get('http://194.50.24.4:7999/api/statistic').json()
@@ -301,7 +302,27 @@ def checker(attempt=0):
             bot.send_message('-535382146', "Проверьте бота", parse_mode='Markdown')
 
 
+def checker_report(attempt=0):
+    try:
+        session = requests.session()
+        session.post("https://api.glassen-it.com/component/socparser/authorization/login",
+                     headers={'Content-Type': 'application/json', },
+                     json={"login": "java_api", "password": "4yEcwVnjEH7D", }
+                     )
+        if ".docx" not in session.get(
+                "https://api.glassen-it.com/component/socparser/content/getReportBulletin?reference_ids[]=370&thread_id=4188&from=2022-01-01&to=2022-01-2&network_id[]=1&network_id[]=2&network_id[]=3&network_id[]=4&network_id[]=5&network_id[]=7&network_id[]=8").headers.get(
+            "Content-Disposition"):
+            raise Exception("Проверьте отчет")
+        else:
+            print("ok")
+    except Exception as e:
+        bot.send_message('-535382146', "Проверьте отчет", parse_mode='Markdown')
+        bot.send_message('457180576', str(e), parse_mode='Markdown')
+
+
 schedule.every(15).minutes.do(checker)
+schedule.every(60).minutes.do(checker_report)
+
 # schedule.every().day.at("08:00").do(send_static_an_hour)
 # schedule.every().day.at("12:00").do(send_static_an_hour)
 # schedule.every().day.at("16:00").do(send_static_an_hour)
