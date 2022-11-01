@@ -264,33 +264,33 @@ def checker(attempt=0):
         else:
             tg = dateutil.parser.isoparse(res_json['tg_last'])
             if tg.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
-                text = "*TG не отчевает*  \n"
+                text = "*TG не отвечает*  \n"
             yt = dateutil.parser.isoparse(res_json['yt_last'])
             if yt.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
-                text = "*YT не отчевает*  \n"
+                text = "*YT не отвечает*  \n"
 
             fb = dateutil.parser.isoparse(res_json['fb_last'])
             if fb.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
-                text = "*FB не отчевает*  \n"
+                text = "*FB не отвечает*  \n"
 
             ok = dateutil.parser.isoparse(res_json['ok_last'])
             if ok.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
-                text = "*OK не отчевает*  \n"
+                text = "*OK не отвечает*  \n"
 
             for site in res_json['sites']:
                 if dateutil.parser.isoparse(site[1]).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
-                    text += f"*{site[0]} не отчевает* \n"
+                    text += f"*{site[0]} не отвечает* \n"
             for site in res_json['sites_keys_res']:
                 if dateutil.parser.isoparse([*site.values()][0]['last']).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
-                    text += f"*{[*site][0]} не отчевает*  \n"
+                    text += f"*{[*site][0]} не отвечает*  \n"
             # fb = get_fb_response_json()
             # print(fb)
             # if fb is not None:
             #     # utc + 3
             #     if dateutil.parser.isoparse(fb['last_update']).replace(tzinfo=None) < datetime.today() - timedelta(hours=5):
-            #         text += f"*FB не отчевает* \n"
+            #         text += f"*FB не отвечает* \n"
             # else:
-            #     text += f"*FB не отчевает* \n"
+            #     text += f"*FB не отвечает* \n"
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
     except Exception as e:
