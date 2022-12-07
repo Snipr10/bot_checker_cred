@@ -457,6 +457,7 @@ def send_static_test(message=None):
     try:
         print("send_static_test")
         loop = asyncio.get_event_loop()
+        asyncio.set_event_loop(loop)
         coroutine = run_api_test_for_threads()
         res_text = loop.run_until_complete(coroutine)
         if res_text != "":
@@ -485,7 +486,7 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("16:20").do(send_static_test)
+schedule.every().day.at("16:32").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
