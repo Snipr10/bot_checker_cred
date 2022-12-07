@@ -330,7 +330,7 @@ async def run_api_test_for_threads():
     # res = []
     # for thread_id in [995, 5759, 6138]:
     #     res.append({"thread_id": await run_api_test(thread_id)})
-    res_text = ""
+    res_text = " "
     for thread_res in res:
         for key, value in thread_res.items():
             for v_ in value:
@@ -459,9 +459,9 @@ def send_static_test(message=None):
         coroutine = run_api_test_for_threads()
         res_text = loop.run_until_complete(coroutine)
         if res_text != "":
-            bot.send_message('-535382146', res_text, parse_mode='Markdown')
+            bot.send_message('-892710448', res_text, parse_mode='Markdown')
         else:
-            bot.send_message('-535382146', "Тестирование прошло успешно", parse_mode='Markdown')
+            bot.send_message('-892710448', "Тестирование прошло успешно", parse_mode='Markdown')
 
     except Exception as e:
         try:
@@ -484,22 +484,7 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("15:03").do(send_static_test)
-schedule.every().day.at("15:05").do(send_static_test)
-schedule.every().day.at("15:06").do(send_static_test)
-schedule.every().day.at("15:07").do(send_static_test)
-schedule.every().day.at("15:08").do(send_static_test)
-schedule.every().day.at("15:09").do(send_static_test)
-schedule.every().day.at("15:10").do(send_static_test)
-schedule.every().day.at("15:11").do(send_static_test)
-schedule.every().day.at("15:12").do(send_static_test)
-schedule.every().day.at("15:13").do(send_static_test)
-schedule.every().day.at("15:14").do(send_static_test)
-schedule.every().day.at("15:15").do(send_static_test)
-schedule.every().day.at("15:16").do(send_static_test)
-schedule.every().day.at("15:17").do(send_static_test)
-schedule.every().day.at("15:18").do(send_static_test)
-schedule.every().day.at("15:19").do(send_static_test)
+schedule.every().day.at("15:55").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
