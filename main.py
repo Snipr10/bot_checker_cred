@@ -456,10 +456,9 @@ async def run_api_test(thread_id):
 def send_static_test(message=None):
     try:
         print("send_static_test")
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        coroutine = run_api_test_for_threads()
-        res_text = loop.run_until_complete(coroutine)
+        res_text = loop.run_until_complete(run_api_test_for_threads())
         if res_text != "":
             bot.send_message('-892710448', res_text, parse_mode='Markdown')
         else:
@@ -486,7 +485,7 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("16:32").do(send_static_test)
+schedule.every().day.at("16:46").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
