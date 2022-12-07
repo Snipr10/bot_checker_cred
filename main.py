@@ -7,6 +7,10 @@ import schedule
 import time
 import telebot
 import requests
+import asyncio
+import httpx
+
+TIMEOUT = 5 * 60
 
 # logging.basicConfig(filename='prod.log', level=logging.INFO)
 
@@ -320,6 +324,148 @@ def checker_report(attempt=0):
         bot.send_message('457180576', str(e), parse_mode='Markdown')
 
 
+async def run_api_test_for_threads():
+    res = await asyncio.gather(
+        *[asyncio.wait_for(run_api_test(thread_id), TIMEOUT * 10) for thread_id in [995, 5759, 6138]])
+    # res = []
+    # for thread_id in [995, 5759, 6138]:
+    #     res.append({"thread_id": await run_api_test(thread_id)})
+    res_text = ""
+    for thread_res in res:
+        for key, value in thread_res.items():
+            for v_ in value:
+                for k, v in v_.items():
+                    try:
+                        if v.status_code != 200:
+                            res_text += f"* {key} {k} * status code: {v.status_code} \n"
+                    except Exception:
+                        res_text += f"* {key} {k} *  {str(v)} \n"
+    return res_text
+
+async def run_api_test(thread_id):
+    async with httpx.AsyncClient() as session:
+        try:
+            res_login = await session.post(
+                "https://api.glassen-it.com/component/socparser/authorization/login",
+                json={
+                    "login": "java_api",
+                    "password": "4yEcwVnjEH7D"
+                },
+                timeout=TIMEOUT
+            )
+        except Exception as e:
+            res_login = str(e)
+        try:
+            res_currentsmi = await session.get("https://api.glassen-it.com/component/socparser/content/currentsmi")
+        except Exception as e:
+            res_currentsmi = str(e)
+        try:
+            res_getTopic = "нет сми"
+            for r in res_currentsmi.json():
+
+                res_getTopic_r = await session.post(
+                    "https://api.glassen-it.com/component/socparser/content/getTopic",
+                    json={
+                        "id": r["group_id"],
+                        "thread_id": thread_id,
+                        "referenceFilter": [
+                            1
+                        ],
+                        "type": "smi",
+                        "start": 0,
+                        "limit": 10
+                    }
+                )
+                if res_getTopic_r.status_code != 200 or res_getTopic == "нет сми":
+                    res_getTopic = res_getTopic_r
+        except Exception as e:
+            res_getTopic = str(e)
+        try:
+            res_post = await session.post(
+                "https://api.glassen-it.com/component/socparser/content/posts",
+                json={
+                    "thread_id": thread_id,
+                    "from": "2022-12-03 00:00:00",
+                    "to": "2022-12-03 23:59:59",
+                    "limit": 20,
+                    "start": 0,
+                    "sort": {
+                        "type": "date",
+                        "order": "desc",
+                        "name": "dateDown"
+                    },
+                    "filter": {
+                        "network_id": ["1", "2", "3", "4", "5", "7", "8", "10"],
+                        "repostoption": "whatever"
+                    }
+                },
+                timeout=TIMEOUT
+            )
+        except Exception as e:
+            res_post = str(e)
+        try:
+            res_getPostCountLight = await session.post(
+                "https://api.glassen-it.com/component/socparser/content/getPostCountLight",
+                json={"thread_id": thread_id, "from": "2022-12-03 00:00:00", "to": "2022-12-03 23:59:59"},
+                timeout=TIMEOUT
+            )
+        except Exception as e:
+            res_getPostCountLight = str(e)
+        try:
+            res_trusthourly = await session.post(
+                "https://api.glassen-it.com/component/socparser/stats/trusthourly",
+                json={
+                    "thread_id": thread_id, "from": "2022-12-02T21:00:00.091Z", "to": "2022-12-03T20:59:59.091Z"
+                },
+                timeout=TIMEOUT
+            )
+        except Exception as e:
+            res_trusthourly = str(e)
+        try:
+            res_allcommentaries = await session.post(
+                "https://api.glassen-it.com/component/socparser/content/allcommentaries",
+                json={
+                    "thread_id": thread_id,
+                    "from": "2022-12-03 00:00:00",
+                    "to": "2022-12-03 18:20:38",
+                    "limit": 20,
+                    "start": 0,
+                    "sort": {"type": "likes", "order": "desc"},
+                    "filter": {}
+                },
+                timeout=TIMEOUT
+            )
+        except Exception as e:
+            res_allcommentaries = str(e)
+
+        return {thread_id: [
+            {"login": res_login},
+            {"posts": res_post},
+            {"trusthourly": res_trusthourly},
+            {"getPostCountLight": res_getPostCountLight},
+            {"allcommentaries": res_allcommentaries},
+            {"currentsmi": res_currentsmi},
+            {"getTopic": res_getTopic}
+        ]
+        }
+
+
+def send_static_test(message=None):
+    try:
+        loop = asyncio.get_event_loop()
+        coroutine = run_api_test_for_threads()
+        res_text = loop.run_until_complete(coroutine)
+        if res_text != "":
+            bot.send_message('-535382146', res_text, parse_mode='Markdown')
+        else:
+            bot.send_message('-535382146', "Тестирование прошло успешно", parse_mode='Markdown')
+
+    except Exception:
+        try:
+            bot.send_message('457180576', 'Что-то сломалось', parse_mode='Markdown')
+        except Exception:
+            pass
+
 schedule.every(15).minutes.do(checker)
 schedule.every(60).minutes.do(checker_report)
 
@@ -333,7 +479,8 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-
+schedule.every().day.at("2:00").do(send_static_test)
+schedule.every().day.at("15:00").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
