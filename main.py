@@ -485,7 +485,7 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("16:46").do(send_static_test)
+schedule.every().day.at("18:00").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
