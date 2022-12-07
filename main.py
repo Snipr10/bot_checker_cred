@@ -339,7 +339,8 @@ async def run_api_test_for_threads():
                         if v.status_code != 200:
                             res_text += f"* {key} {k} * status code: {v.status_code} \n"
                     except Exception:
-                        res_text += f"* {key} {k} *  {str(v)} \n"
+                        if str(v):
+                            res_text += f"* {key} {k} *  {str(v)} \n"
     return res_text
 
 async def run_api_test(thread_id):
@@ -484,7 +485,7 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("15:55").do(send_static_test)
+schedule.every().day.at("16:10").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
