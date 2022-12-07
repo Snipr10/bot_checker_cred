@@ -475,11 +475,11 @@ schedule.every(60).minutes.do(checker_report)
 # schedule.every().day.at("20:00").do(send_static_an_hour)
 # time -3 (UTC)
 # https://stackoverflow.com/questions/65551967/python-scheduler-schedule-job-in-specific-time-zone-from-any-time-zone
+schedule.every().day.at("02:00").do(send_static_test)
 schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("2:00").do(send_static_test)
 schedule.every().day.at("15:00").do(send_static_test)
 
 def start_bot():
