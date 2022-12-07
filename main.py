@@ -471,6 +471,7 @@ def send_static_test(message=None):
 
 schedule.every(15).minutes.do(checker)
 schedule.every(60).minutes.do(checker_report)
+send_static_test()
 
 # schedule.every().day.at("08:00").do(send_static_an_hour)
 # schedule.every().day.at("12:00").do(send_static_an_hour)
