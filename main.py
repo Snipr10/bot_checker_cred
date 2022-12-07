@@ -460,9 +460,9 @@ def send_static_test(message=None):
         else:
             bot.send_message('-535382146', "Тестирование прошло успешно", parse_mode='Markdown')
 
-    except Exception:
+    except Exception as e:
         try:
-            bot.send_message('457180576', 'Что-то сломалось', parse_mode='Markdown')
+            bot.send_message('457180576', f'Что-то сломалось {e}', parse_mode='Markdown')
         except Exception:
             pass
 
@@ -480,7 +480,7 @@ schedule.every().day.at("05:00").do(send_static_an_hour)
 schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
-schedule.every().day.at("15:00").do(send_static_test)
+schedule.every().day.at("15:03").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
