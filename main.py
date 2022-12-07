@@ -345,6 +345,7 @@ async def run_api_test_for_threads():
 async def run_api_test(thread_id):
     async with httpx.AsyncClient() as session:
         try:
+            print("res_login")
             res_login = await session.post(
                 "https://api.glassen-it.com/component/socparser/authorization/login",
                 json={
@@ -356,6 +357,7 @@ async def run_api_test(thread_id):
         except Exception as e:
             res_login = str(e)
         try:
+            print("res_currentsmi")
             res_currentsmi = await session.get("https://api.glassen-it.com/component/socparser/content/currentsmi")
         except Exception as e:
             res_currentsmi = str(e)
@@ -452,6 +454,7 @@ async def run_api_test(thread_id):
 
 def send_static_test(message=None):
     try:
+        print("send_static_test")
         loop = asyncio.get_event_loop()
         coroutine = run_api_test_for_threads()
         res_text = loop.run_until_complete(coroutine)
@@ -481,6 +484,21 @@ schedule.every().day.at("09:00").do(send_static_an_hour)
 schedule.every().day.at("13:00").do(send_static_an_hour)
 schedule.every().day.at("17:00").do(send_static_an_hour)
 schedule.every().day.at("15:03").do(send_static_test)
+schedule.every().day.at("15:05").do(send_static_test)
+schedule.every().day.at("15:06").do(send_static_test)
+schedule.every().day.at("15:07").do(send_static_test)
+schedule.every().day.at("15:08").do(send_static_test)
+schedule.every().day.at("15:09").do(send_static_test)
+schedule.every().day.at("15:10").do(send_static_test)
+schedule.every().day.at("15:11").do(send_static_test)
+schedule.every().day.at("15:12").do(send_static_test)
+schedule.every().day.at("15:13").do(send_static_test)
+schedule.every().day.at("15:14").do(send_static_test)
+schedule.every().day.at("15:15").do(send_static_test)
+schedule.every().day.at("15:16").do(send_static_test)
+schedule.every().day.at("15:17").do(send_static_test)
+schedule.every().day.at("15:18").do(send_static_test)
+schedule.every().day.at("15:19").do(send_static_test)
 
 def start_bot():
     bot.polling(none_stop=True)
