@@ -461,7 +461,7 @@ def send_static_test(message=None):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         res_text = loop.run_until_complete(run_api_test_for_threads())
-        if res_text != "":
+        if not res_text:
             bot.send_message('-892710448', res_text, parse_mode='Markdown')
         else:
             bot.send_message('-892710448', "Тестирование прошло успешно", parse_mode='Markdown')
