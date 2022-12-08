@@ -326,7 +326,9 @@ def checker_report(attempt=0):
 
 async def run_api_test_for_threads():
     res = await asyncio.gather(
-        *[asyncio.wait_for(run_api_test(thread_id), TIMEOUT * 10) for thread_id in [995, 5759, 6138]])
+        *[asyncio.wait_for(run_api_test(thread_id), TIMEOUT * 10)
+          for thread_id in [5641, 5640, 5637, 1001,5639, 5638, 5636, 5635, 998, 1113]]
+    )
     # res = []
     # for thread_id in [995, 5759, 6138]:
     #     res.append({"thread_id": await run_api_test(thread_id)})
