@@ -14,7 +14,7 @@ TIMEOUT = 5 * 60
 
 # logging.basicConfig(filename='prod.log', level=logging.INFO)
 
-bot = telebot.TeleBot('1893821469:AAHZdGtFjG9SroQBRuX9YzmH4jjOhM_Pquc')
+bot = telebot.TeleBot('1893821469:AAG5ZKgaNeIUOQN6dPK1e3nbLdmUzEc9YAQ')
 
 
 URL_TG_API = "http://194.50.24.4:8000/api/"
