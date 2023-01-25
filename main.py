@@ -68,6 +68,8 @@ def statistic():
     tg_posts = "None"
     yt_posts = "None"
     ok_posts = "None"
+    ig_posts = "None"
+
     # try:
     #     fb = requests.get('http://194.50.24.4:7999/api/statistic').json()
     #     fb_proxy = fb['proxy']
@@ -118,12 +120,13 @@ def statistic():
             message += f'Не могу получить данные из *tw* \n'
         try:
             ig = parsing_data['ig']
-            ig_bots = ig['bots']
-            ig_proxy = ig['proxy']
+            ig_bots = ig['bot']
+            ig_posts = ig["count"]
+            # ig_proxy = ig['proxy']
             if ig_bots < ig_bot_limit:
                 message += f'Недостаточно ботов *ig*: _{ig_bots}_, минимум _{ig_bot_limit}_ \n'
-            if ig_proxy < ig_proxy_limit:
-                message += f'Недостаточно прокси *ig*: _{ig_proxy}_, минимум _{ig_proxy_limit}_ \n'
+            # if ig_proxy < ig_proxy_limit:
+            #     message += f'Недостаточно прокси *ig*: _{ig_proxy}_, минимум _{ig_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *ig* \n'
         try:
@@ -176,6 +179,7 @@ def statistic():
     message += f"*yt:* {yt_posts} \n"
     message += f"*fb:* {fb_posts} \n"
     message += f"*ok:* {ok_posts} \n"
+    message += f"*ig:* {ig_posts} \n"
     return message
 
 
@@ -200,7 +204,7 @@ def parsing_statistic():
         text_message += f"парсинг каналов *fb*: {get_date(res_json['fb_sources'])}; \n"
         text_message += f"парсинг определенных каналов *fb*: {get_date(res_json['fb_sources_special'])}; \n"
         text_message += f"поиск по ключам *ig*: {get_date(res_json['ig_keys'])}; \n"
-        text_message += f"парсинг каналов *ig*: {get_date(res_json['g_sources'])}; \n"
+        text_message += f"парсинг каналов *ig*: {get_date(res_json['ig_sources'])}; \n"
         text_message += f"поиск по ключам *ok*: {get_date(res_json['ok_keys'])}; \n"
         text_message += f"парсинг каналов *ok*: {get_date(res_json['ok_sources'])}; \n"
         # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
@@ -505,8 +509,9 @@ def start_sending_message():
         schedule.run_pending()
         time.sleep(60)
 
-
-pool_source = ThreadPoolExecutor(3)
-pool_source.submit(start_sending_message)
-pool_source.submit(start_bot)
-pool_source.shutdown()
+if __name__ == '__main__':
+    start_bot()
+# pool_source = ThreadPoolExecutor(3)
+# pool_source.submit(start_sending_message)
+# pool_source.submit(start_bot)
+# pool_source.shutdown()
