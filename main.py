@@ -199,6 +199,8 @@ def parsing_statistic():
         text_message += f"поиск по ключам *fb*: {get_date(res_json['fb_keys'])}; \n"
         text_message += f"парсинг каналов *fb*: {get_date(res_json['fb_sources'])}; \n"
         text_message += f"парсинг определенных каналов *fb*: {get_date(res_json['fb_sources_special'])}; \n"
+        text_message += f"поиск по ключам *ig*: {get_date(res_json['ig_keys'])}; \n"
+        text_message += f"парсинг каналов *ig*: {get_date(res_json['g_sources'])}; \n"
         text_message += f"поиск по ключам *ok*: {get_date(res_json['ok_keys'])}; \n"
         text_message += f"парсинг каналов *ok*: {get_date(res_json['ok_sources'])}; \n"
         # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
@@ -269,6 +271,9 @@ def checker(attempt=0):
             tg = dateutil.parser.isoparse(res_json['tg_last'])
             if tg.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*TG не отвечает*  \n"
+            ig = dateutil.parser.isoparse(res_json['ig_last'])
+            if ig.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*IG не отвечает*  \n"
             yt = dateutil.parser.isoparse(res_json['yt_last'])
             if yt.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*YT не отвечает*  \n"
