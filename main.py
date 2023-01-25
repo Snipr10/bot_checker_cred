@@ -303,6 +303,8 @@ def checker(attempt=0):
         if text:
             bot.send_message('-535382146', text, parse_mode='Markdown')
     except Exception as e:
+        print(f"checker {e}")
+
         if attempt < 5:
             attempt += 1
             return checker(attempt)
@@ -494,6 +496,7 @@ schedule.every().day.at("17:00").do(send_static_an_hour)
 schedule.every().day.at("18:00").do(send_static_test)
 
 def start_bot():
+    print("start_bot")
     bot.polling(none_stop=True)
 
 
