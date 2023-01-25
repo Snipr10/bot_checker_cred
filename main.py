@@ -509,9 +509,8 @@ def start_sending_message():
         schedule.run_pending()
         time.sleep(60)
 
-if __name__ == '__main__':
-    start_bot()
-# pool_source = ThreadPoolExecutor(3)
-# pool_source.submit(start_sending_message)
-# pool_source.submit(start_bot)
-# pool_source.shutdown()
+
+pool_source = ThreadPoolExecutor(3)
+pool_source.submit(start_sending_message)
+pool_source.submit(start_bot)
+pool_source.shutdown()
