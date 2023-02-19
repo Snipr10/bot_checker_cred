@@ -500,9 +500,12 @@ schedule.every().day.at("17:00").do(send_static_an_hour)
 schedule.every().day.at("18:00").do(send_static_test)
 
 def start_bot():
-    print("start_bot")
-    bot.polling(none_stop=True)
-
+    while True:
+        try:
+            print("start_bot")
+            bot.polling(none_stop=True)
+        except Exception as e:
+            print(e)
 
 def start_sending_message():
     while True:
