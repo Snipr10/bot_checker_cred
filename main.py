@@ -102,6 +102,10 @@ def statistic():
         except Exception:
             message += f'Не могу получить данные из *tg* \n'
         try:
+            dzen_posts = parsing_data['dzen']
+        except Exception:
+            message += f'Не могу получить данные из *dzen* \n'
+        try:
             vk = parsing_data['vk']
             vk_bots = vk['bots']
             vk_proxy = vk['proxy']
@@ -180,6 +184,7 @@ def statistic():
     message += f"*fb:* {fb_posts} \n"
     message += f"*ok:* {ok_posts} \n"
     message += f"*ig:* {ig_posts} \n"
+    message += f"*dzen:* {dzen_posts} \n"
     return message
 
 
@@ -207,6 +212,14 @@ def parsing_statistic():
         text_message += f"парсинг каналов *ig*: {get_date(res_json['ig_sources'])}; \n"
         text_message += f"поиск по ключам *ok*: {get_date(res_json['ok_keys'])}; \n"
         text_message += f"парсинг каналов *ok*: {get_date(res_json['ok_sources'])}; \n"
+        try:
+            text_message += f"поиск по ключам *dzen*: {get_date(res_json['dzen_keys'])}; \n"
+        except Exception:
+            pass
+        try:
+            text_message += f"парсинг каналов *dzen*: {get_date(res_json['dzen_sources'])}; \n"
+        except Exception:
+            pass
         # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
         for site in res_json['sites']:
             text_message += f"парсинг *{site[0]}*: {get_date(site[1])}; \n"
