@@ -102,7 +102,7 @@ def statistic():
         except Exception:
             message += f'Не могу получить данные из *tg* \n'
         try:
-            dzen_posts = parsing_data['dzen']
+            dzen_posts = parsing_data['dzen']['count']
         except Exception:
             message += f'Не могу получить данные из *dzen* \n'
         try:
