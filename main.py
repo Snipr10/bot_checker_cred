@@ -209,6 +209,7 @@ def parsing_statistic():
         text_message += f"парсинг каналов *fb*: {get_date(res_json['fb_sources'])}; \n"
         text_message += f"парсинг определенных каналов *fb*: {get_date(res_json['fb_sources_special'])}; \n"
         text_message += f"поиск по ключам *ig*: {get_date(res_json['ig_keys'])}; \n"
+        text_message += f"парсинг по определенным ключам *ig*: {get_date(res_json['ig_keys_special'])}; \n"
         text_message += f"парсинг каналов *ig*: {get_date(res_json['ig_sources'])}; \n"
         text_message += f"поиск по ключам *ok*: {get_date(res_json['ok_keys'])}; \n"
         text_message += f"парсинг каналов *ok*: {get_date(res_json['ok_sources'])}; \n"
