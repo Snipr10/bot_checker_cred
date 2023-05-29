@@ -289,19 +289,31 @@ def checker(attempt=0):
             if not res_json.get("bd"):
                 text += f"*БД не отвечает*  \n"
         else:
+
+            parsing_data = requests.get('http://194.50.24.4:8000/api/statistic').json()
+            fb_proxy = parsing_data['fb']['proxy']
+            ig_proxy = parsing_data['ig']['proxy']
+            if fb_proxy == 0:
+                text = "*FB нет прокси*  \n"
+            if ig_proxy == 0:
+                text = "*IG нет прокси*  \n"
+
             tg = dateutil.parser.isoparse(res_json['tg_last'])
             if tg.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*TG не отвечает*  \n"
+
             ig = dateutil.parser.isoparse(res_json['ig_last'])
+            fb = dateutil.parser.isoparse(res_json['fb_last'])
+            if fb.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*FB не отвечает*  \n"
             if ig.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*IG не отвечает*  \n"
+
+
             yt = dateutil.parser.isoparse(res_json['yt_last'])
             if yt.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*YT не отвечает*  \n"
 
-            fb = dateutil.parser.isoparse(res_json['fb_last'])
-            if fb.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
-                text = "*FB не отвечает*  \n"
 
             ok = dateutil.parser.isoparse(res_json['ok_last'])
             if ok.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
