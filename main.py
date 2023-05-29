@@ -33,7 +33,7 @@ def send_statistic(message):
     bot.reply_to(message, statistic(), parse_mode='Markdown')
 
 
-fb_proxy_limit = 200
+fb_proxy_limit = 50
 fb_bot_limit = 30
 fb_balance_limit = 100
 
@@ -49,7 +49,7 @@ vk_proxy_limit = 2_500
 tw_proxy_limit = 2_500
 
 ig_bot_limit = 600
-ig_proxy_limit = 1_000
+ig_proxy_limit = 50
 
 yt_proxy_limit = 250
 
@@ -126,11 +126,11 @@ def statistic():
             ig = parsing_data['ig']
             ig_bots = ig['bot']
             ig_posts = ig["count"]
-            # ig_proxy = ig['proxy']
+            ig_proxy = ig['proxy']
             if ig_bots < ig_bot_limit:
                 message += f'Недостаточно ботов *ig*: _{ig_bots}_, минимум _{ig_bot_limit}_ \n'
-            # if ig_proxy < ig_proxy_limit:
-            #     message += f'Недостаточно прокси *ig*: _{ig_proxy}_, минимум _{ig_proxy_limit}_ \n'
+            if ig_proxy < ig_proxy_limit:
+                message += f'Недостаточно прокси *ig*: _{ig_proxy}_, минимум _{ig_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *ig* \n'
         try:
@@ -156,8 +156,11 @@ def statistic():
             fb = parsing_data['fb']
             fb_posts = fb['count']
             fb_bot = fb['bot']
+            fb_proxy = fb['proxy']
             if fb_bot < fb_bot_limit:
                 message += f'Недостаточно ботов *fb*: _{fb_bot}_, минимум _{fb_bot_limit}_ \n'
+            if fb_proxy < fb_proxy_limit:
+                message += f'Недостаточно прокси *fb*: _{fb_proxy}_, минимум _{fb_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *yt* \n'
         try:
