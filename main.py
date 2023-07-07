@@ -51,6 +51,9 @@ tw_proxy_limit = 2_500
 ig_bot_limit = 600
 ig_proxy_limit = 50
 
+tw_bot_limit  = 200
+
+
 yt_proxy_limit = 250
 
 smi_proxy_limit = 1_000
@@ -69,7 +72,7 @@ def statistic():
     yt_posts = "None"
     ok_posts = "None"
     ig_posts = "None"
-
+    tw_posts = "None"
     # try:
     #     fb = requests.get('http://194.50.24.4:7999/api/statistic').json()
     #     fb_proxy = fb['proxy']
@@ -133,6 +136,16 @@ def statistic():
                 message += f'Недостаточно прокси *ig*: _{ig_proxy}_, минимум _{ig_proxy_limit}_ \n'
         except Exception:
             message += f'Не могу получить данные из *ig* \n'
+
+        try:
+            tw = parsing_data['tw']
+            tw_bots = tw['bot']
+            tw_posts = tw["count"]
+            if tw_bots < tw_bot_limit:
+                message += f'Недостаточно ботов *tg*: _{tw_bots}_, минимум _{tw_bot_limit}_ \n'
+        except Exception:
+            message += f'Не могу получить данные из *ig* \n'
+
         try:
             proxy_smi = parsing_data['proxy_smi']
             if proxy_smi < smi_proxy_limit:
@@ -187,6 +200,7 @@ def statistic():
     message += f"*fb:* {fb_posts} \n"
     message += f"*ok:* {ok_posts} \n"
     message += f"*ig:* {ig_posts} \n"
+    message += f"*tw:* {tw_posts} \n"
     message += f"*dzen:* {dzen_posts} \n"
     return message
 
@@ -224,6 +238,15 @@ def parsing_statistic():
             text_message += f"парсинг каналов *dzen*: {get_date(res_json['dzen_sources'])}; \n"
         except Exception:
             pass
+        try:
+            text_message += f"поиск по ключам *tw*: {get_date(res_json['tw_keys'])}; \n"
+        except Exception:
+            pass
+        try:
+            text_message += f"парсинг каналов *tw*: {get_date(res_json['tw_sources'])}; \n"
+        except Exception:
+            pass
+
         # text_message += f"парсинг *СМИ*: {get_date(res_json['yt_sources'])}; \n"
         for site in res_json['sites']:
             text_message += f"парсинг *{site[0]}*: {get_date(site[1])}; \n"
