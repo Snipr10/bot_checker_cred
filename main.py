@@ -46,12 +46,12 @@ tg_balance_limit = 100
 vk_bot_limit = 2_500
 vk_proxy_limit = 2_500
 
-tw_proxy_limit = 2_500
+tw_proxy_limit = 500
 
 ig_bot_limit = 600
 ig_proxy_limit = 50
 
-tw_bot_limit  = 200
+tw_bot_limit  = 300
 
 
 yt_proxy_limit = 250
@@ -120,7 +120,7 @@ def statistic():
             message += f'Не могу получить данные из *vk* \n'
         try:
             tw = parsing_data['tw']
-            tw_proxy = tw['proxy']
+            tw_proxy = tw['count']
             if tw_proxy < tw_proxy_limit:
                 message += f'Недостаточно прокси *tw*: _{tw_proxy}_, минимум _{tw_proxy_limit}_ \n'
         except Exception:
@@ -142,9 +142,9 @@ def statistic():
             tw_bots = tw['bot']
             tw_posts = tw["count"]
             if tw_bots < tw_bot_limit:
-                message += f'Недостаточно ботов *tg*: _{tw_bots}_, минимум _{tw_bot_limit}_ \n'
+                message += f'Недостаточно ботов *tw*: _{tw_bots}_, минимум _{tw_bot_limit}_ \n'
         except Exception:
-            message += f'Не могу получить данные из *ig* \n'
+            message += f'Не могу получить данные из *tw* \n'
 
         try:
             proxy_smi = parsing_data['proxy_smi']
@@ -175,7 +175,7 @@ def statistic():
             if fb_proxy < fb_proxy_limit:
                 message += f'Недостаточно прокси *fb*: _{fb_proxy}_, минимум _{fb_proxy_limit}_ \n'
         except Exception:
-            message += f'Не могу получить данные из *yt* \n'
+            message += f'Не могу получить данные из *fb* \n'
         try:
             ok = parsing_data['ok']
             ok_posts = ok['count']
@@ -183,7 +183,7 @@ def statistic():
             if ok_bot < ok_bot_limit:
                 message += f'Недостаточно ботов *ok*: _{ok_bot}_, минимум _{ok_bot_limit}_ \n'
         except Exception:
-            message += f'Не могу получить данные из *yt* \n'
+            message += f'Не могу получить данные из *ok* \n'
     except Exception:
         message += f'Не могу получить данные по *соцсетям* \n'
 
