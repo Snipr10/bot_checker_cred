@@ -342,6 +342,10 @@ def checker(attempt=0):
             if ok.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*OK не отвечает*  \n"
 
+            tw = dateutil.parser.isoparse(res_json['tw_last'])
+            if tw.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*TW не отвечает*  \n"
+
             for site in res_json['sites']:
                 if dateutil.parser.isoparse(site[1]).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
                     text += f"*{site[0]} не отвечает* \n"
