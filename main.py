@@ -352,6 +352,14 @@ def checker(attempt=0):
             for site in res_json['sites_keys_res']:
                 if dateutil.parser.isoparse([*site.values()][0]['last']).replace(tzinfo=None) < datetime.today() - timedelta(hours=2):
                     text += f"*{[*site][0]} не отвечает*  \n"
+            try:
+                best_proxy_k = requests.get(
+                "https://api.best-proxies.ru/proxylist.json?key=%s&speed=1,2" % res_json.get(best_proxy_key),
+                timeout=600)
+                if not best_proxy_k.ok:
+                    text += f"*Oбновите ключ Best Proxy* {best_proxy_k.status_code} \n"
+            except Exception:
+                pass
             # fb = get_fb_response_json()
             # print(fb)
             # if fb is not None:
