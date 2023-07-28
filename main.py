@@ -550,7 +550,7 @@ def send_static_test(message=None):
         except Exception:
             pass
 
-schedule.every(2).minutes.do(checker)
+schedule.every(15).minutes.do(checker)
 schedule.every(60).minutes.do(checker_report)
 
 # schedule.every().day.at("08:00").do(send_static_an_hour)
