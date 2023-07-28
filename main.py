@@ -303,6 +303,7 @@ def get_fb_response_json(attempts=0):
 
 
 def checker(attempt=0):
+    print("checker")
     try:
         text = ""
         res_json = get_response_json()
