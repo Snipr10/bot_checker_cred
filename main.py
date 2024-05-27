@@ -326,6 +326,10 @@ def checker(attempt=0):
             if tg.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
                 text = "*TG не отвечает*  \n"
 
+            tg_keys_last = dateutil.parser.isoparse(res_json['tg_keys_last'])
+            if tg_keys_last.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
+                text = "*TG stat не отвечает*  \n"
+
             ig = dateutil.parser.isoparse(res_json['ig_last'])
             fb = dateutil.parser.isoparse(res_json['fb_last'])
             if fb.replace(tzinfo=None) < datetime.today() - timedelta(hours=1):
