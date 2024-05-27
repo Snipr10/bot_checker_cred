@@ -218,6 +218,7 @@ def parsing_statistic():
     try:
         tasks_yt_tg_status = requests.get(URL_TG_API + "tasks_yt_tg_status")
         res_json = tasks_yt_tg_status.json()
+        text_message += f"поиск по ключам *tg stat*: {get_date(res_json['tg_keys'])}; \n"
         text_message += f"парсинг каналов *tg*: {get_date(res_json['tg_sources'])}; \n"
         text_message += f"парсинг определенных каналов *tg*: {get_date(res_json['tg_sources_special'])}; \n"
         text_message += f"поиск по ключам *yt*: {get_date(res_json['yt_keys'])}; \n"
